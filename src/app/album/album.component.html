@@ -1,0 +1,66 @@
+<h1 _ngcontent-xie-c36="">{{ album.name }}</h1>
+<p _ngcontent-xie-c36="">Full track listing for {{ album.name }}</p>
+<p>
+  Click the <mat-icon mat-list-icon>queue_music</mat-icon> icon to add a song to your favourites list
+
+</p>
+<br _ngcontent-xie-c36="" />
+<mat-card _ngcontent-xie-c36="" class="mat-card mat-focus-indicator">
+  <mat-card-content _ngcontent-xie-c36="" class="mat-card-content fxlayout">
+    <div _ngcontent-xie-c36="">
+      <img _ngcontent-xie-c36="" alt="album cover" src="{{ album.images[0].url }}" style="margin: 10px; width: 300px" />
+    </div>
+    <div _ngcontent-xie-c36="" class="fxflex">
+      <div _ngcontent-xie-c36="" style="min-width: 300px; margin: 10px">
+        <strong _ngcontent-xie-c36="">Record Label: </strong> {{ album.label
+        }}<br _ngcontent-xie-c36="" /><strong _ngcontent-xie-c36="">Release Date:
+        </strong>
+        {{ album.release_date }}<br _ngcontent-xie-c36="" /><br _ngcontent-xie-c36="" /><strong
+          _ngcontent-xie-c36="">Tracks: </strong>{{ album.total_tracks
+        }}<br _ngcontent-xie-c36="" /><strong _ngcontent-xie-c36="">Popularity:
+        </strong>
+        {{ album.popularity }}<br _ngcontent-xie-c36="" /><br _ngcontent-xie-c36="" />
+        <mat-chip-list _ngcontent-xie-c36="" aria-label="Artist selection" class="mat-chip-list" id="mat-chip-list-102"
+          tabindex="0" aria-required="false" aria-disabled="false" aria-invalid="false" aria-multiselectable="false"
+          role="listbox" aria-orientation="horizontal" *ngFor="let artist of album.artists">
+          <div class="mat-chip-list-wrapper">
+            <mat-chip _ngcontent-xie-c36="" routerLink="/artist"
+              class="mat-chip mat-focus-indicator mat-primary mat-standard-chip ng-star-inserted" tabindex="-1"
+              role="option" aria-disabled="false">
+              <div class="mat-chip-ripple"></div>
+              {{ artist.name }}
+            </mat-chip>
+            <!---->
+          </div>
+        </mat-chip-list><br _ngcontent-xie-c36="" />
+        <div *ngFor="let copyright of album.copyrights">
+          <div _ngcontent-xie-c36="" class="ng-star-inserted">
+            {{ copyright.text }}
+          </div>
+        </div>
+        <!---->
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card><br _ngcontent-xie-c36="" /><br _ngcontent-xie-c36="" />
+<h2 _ngcontent-xie-c36="">Track Listing</h2>
+<mat-list _ngcontent-xie-c36="" class="mat-list mat-list-base">
+  <mat-list-item _ngcontent-xie-c36=""
+    class="mat-list-item mat-focus-indicator mat-list-item-with-avatar ng-star-inserted"
+    *ngFor="let track of album.tracks.items; let i = index" width="100%"><span class="mat-list-item-content"><span
+        mat-ripple="" class="mat-ripple mat-list-item-ripple"></span>
+      <mat-icon (click)="addToFavorites(track.id)" _ngcontent-xie-c36="" role="img" mat-list-icon=""
+        class="mat-icon notranslate mat-list-icon material-icons mat-icon-no-color" aria-hidden="true"
+        data-mat-icon-type="font">queue_music</mat-icon><span class="mat-list-text" style="display: block">
+        <div _ngcontent-xie-c36="" mat-line="" class="mat-line">
+          <mat-card _ngcontent-xie-c36="" class="mat-card mat-focus-indicator">
+            <mat-card-content _ngcontent-xie-c36="" class="mat-card-content">
+              {{ i + 1 }} : {{ track.name }} -
+              {{ (track.duration_ms / 60000).toFixed(2) }}
+            </mat-card-content>
+            <div *ngIf="track.preview_url"><br /><audio controls [src]="track.preview_url"></audio></div>
+          </mat-card>
+        </div>
+      </span>
+    </span></mat-list-item>
+</mat-list>
