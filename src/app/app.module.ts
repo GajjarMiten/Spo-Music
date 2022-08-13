@@ -22,15 +22,28 @@ import { AlbumComponent } from './album/album.component';
 import { ArtistDiscographyComponent } from './artist-discography/artist-discography.component';
 import { NewReleasesComponent } from './new-releases/new-releases.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { RegisterComponent } from './register/register.component';
-
+import { LoginComponent } from './login/login.component';
+import { InterceptTokenService } from './intercept-token.service';
 @NgModule({
-  declarations: [AppComponent, AboutComponent, NotFoundComponent, NewReleasesComponent, AlbumComponent, ArtistDiscographyComponent, NewReleasesComponent, SearchResultComponent, FavouritesComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    AboutComponent,
+    NotFoundComponent,
+    NewReleasesComponent,
+    AlbumComponent,
+    ArtistDiscographyComponent,
+    NewReleasesComponent,
+    SearchResultComponent,
+    FavouritesComponent,
+    RegisterComponent,
+    LoginComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -48,9 +61,15 @@ import { RegisterComponent } from './register/register.component';
     MatChipsModule,
     HttpClientModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptTokenService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
