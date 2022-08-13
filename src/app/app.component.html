@@ -20,9 +20,8 @@
       xPosition="before"
       yPosition="above"
       [overlapTrigger]="false"
-      (click)="logout()"
     >
-      <a mat-menu-item>
+      <a mat-menu-item (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
         <span>Log out</span>
       </a>
