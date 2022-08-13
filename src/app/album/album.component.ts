@@ -12,33 +12,42 @@ import { Subscription } from 'rxjs';
 export class AlbumComponent implements OnInit {
   album: SpotifyApi.SingleAlbumResponse;
 
-  constructor(private snackBar: MatSnackBar, private MusicDataService: MusicDataService, private router: ActivatedRoute) {
+  constructor(
+    private snackBar: MatSnackBar,
+    private MusicDataService: MusicDataService,
+    private router: ActivatedRoute
+  ) {
     this.album = {} as SpotifyApi.SingleAlbumResponse;
   }
 
   private ngUnsubscribe: Subscription | undefined;
 
   addToFavorites(album: string) {
-    const res = this.MusicDataService.addToFavourites(album);;
-    if (res) {
-      this.snackBar.open("Adding to Favourites...", "Done", { duration: 1500 });
-    }
+    this.MusicDataService.addToFavourites(album).subscribe({
+      complete: () => {
+        this.snackBar.open('Adding to Favourites...', 'Done', {
+          duration: 1500,
+        });
+      },
+      error: (err) => {
+        this.snackBar.open(err.error.message, 'Error', {
+          duration: 1500,
+        });
+      },
+    });
   }
 
-
   ngOnInit(): void {
-
-    this.router.params.subscribe(params => {
-      this.ngUnsubscribe = this.MusicDataService.getAlbumById(params["id"]).subscribe(data => {
+    this.router.params.subscribe((params) => {
+      this.ngUnsubscribe = this.MusicDataService.getAlbumById(
+        params['id']
+      ).subscribe((data) => {
         this.album = data;
-      }
-      );
-    })
+      });
+    });
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe?.unsubscribe();
   }
-
-
 }
